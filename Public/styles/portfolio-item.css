@@ -6,17 +6,15 @@
 
 body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-    background-color: #383838;
+    background-color: #303030;
 }
 
-p {
-  color: #BABABA;
-}
 
 .portfolio-item {
     margin-bottom: 25px;
 }
 
+p,
 h1,
 h2,
 h3,
