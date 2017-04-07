@@ -7,7 +7,7 @@ try drop.addProvider(VaporSQLite.Provider.self)
 drop.preparations.append(User.self)
 
 drop.get { req in
-    return try drop.view.make(drop.config["app", "root_path"]?.string ?? "")
+    return try drop.view.make("index.html")
 }
 
 drop.resource("users", UserController())
