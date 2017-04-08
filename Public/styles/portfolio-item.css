@@ -16,11 +16,32 @@ body {
 
 p,
 h1,
-h2,
 h3,
 small {
   color: #BABABA;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
+#most-recent-description {
+  color: #BABABA;
+  margin-bottom: 5px;
+}
+
+#player {
+  margin-top: 10px;
+  width: 100%;
+}
+
+h2 {
+  color: #BABABA;
+  font-size: 120%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 
 li,
 ul,
