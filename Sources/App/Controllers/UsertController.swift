@@ -3,21 +3,29 @@ import HTTP
 
 final class UserController: ResourceRepresentable {
     func index(request: Request) throws -> ResponseRepresentable {
-        return try User.all().makeNode().converted(to: JSON.self)
+        return try JSON(node: try User.all().map({ return try safeUser(user: $0) }))
     }
 
     func create(request: Request) throws -> ResponseRepresentable {
-        guard let name = request.data["name"]?.string else {
-            throw Abort.badRequest
-        }
+        let params = try Validator.validate(req: request, expected:
+            [
+               K.API.FirstName : Type.String,
+               K.API.LastName : Type.String,
+               K.API.Email : Type.String,
+               K.API.Password : Type.String
+            ])
         
-        var user = User(name: name)
+        
+        var user = try User(first: params.string[K.API.FirstName] ?? "",
+                        last: params.string[K.API.LastName] ?? "",
+                        email: params.string[K.API.Email] ?? "",
+                        password: params.string[K.API.Password] ?? "")
         try user.save()
-        return user
+        return try safeUser(user: user)
     }
 
     func show(request: Request, user: User) throws -> ResponseRepresentable {
-        return user
+        return try safeUser(user: user)
     }
 
     func delete(request: Request, user: User) throws -> ResponseRepresentable {
@@ -31,14 +39,21 @@ final class UserController: ResourceRepresentable {
     }
 
     func update(request: Request, user: User) throws -> ResponseRepresentable {
-        guard let name = request.data["name"]?.string else {
-            throw Abort.badRequest
-        }
+        let params = try Validator.validate(req: request, expected:
+            [
+                K.API.FirstName : Type.String,
+                K.API.LastName : Type.String,
+                K.API.Email : Type.String,
+                K.API.Password : Type.String
+            ])
         
-        var user = user
-        user.name = name
+        
+        var user = try User(first: params.string[K.API.FirstName] ?? "",
+                        last: params.string[K.API.LastName] ?? "",
+                        email: params.string[K.API.Email] ?? "",
+                        password: params.string[K.API.Password] ?? "")
         try user.save()
-        return user
+        return try safeUser(user: user)
     }
 
     func replace(request: Request, user: User) throws -> ResponseRepresentable {
@@ -56,5 +71,9 @@ final class UserController: ResourceRepresentable {
             destroy: delete,
             clear: clear
         )
+    }
+    
+    private func safeUser(user: User) throws -> JSON {
+        return try JSON(node: try user.makeSafeNode())
     }
 }
