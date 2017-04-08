@@ -1,3 +1,5 @@
+ps aux | grep App
+# Kill old process
 vapor build --release
-#sudo supervisorctl restart debuggedpodcast
-#.build/release/App serve --env=production &
+# probably rm Data/database.sqlite
+.build/release/App serve --env=production &
