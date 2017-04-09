@@ -12,12 +12,14 @@ import HTTP
 enum Type {
     case Int
     case String
+    case Bool
 }
 
 class Validator {
-    static func validate(req: Request, expected:[String: Type]) throws -> (string: [String: String], int: [String: Int]) {
+    static func validate(req: Request, expected:[String: Type]) throws -> (string: [String: String], int: [String: Int], bool: [String: Bool]) {
         var stringParams:[String:String] = [:]
         var intParams:[String:Int] = [:]
+        var boolParams:[String:Bool] = [:]
         
         for item in expected{
             
@@ -36,9 +38,17 @@ class Validator {
                     throw Abort.custom(status: Status.badRequest, message: "\(item.key) should be type: String")
                 }
                 break
+            case .Bool:
+                if let val = req.data[item.key]?.bool {
+                    boolParams[item.key] = val
+                }else{
+                    throw Abort.custom(status: Status.badRequest, message: "\(item.key) should be type: Bool")
+                }
+                break
             }
+
         }
         
-        return (stringParams, intParams)
+        return (stringParams, intParams, boolParams)
     }
 }

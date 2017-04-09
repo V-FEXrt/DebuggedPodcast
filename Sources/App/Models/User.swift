@@ -62,7 +62,7 @@ final class User: Model {
     }
     
     static func prepare(_ database: Database) throws {
-        try database.create(K.API.Users) { users in
+        try database.create(K.API.Tables.Users) { users in
             users.id()
             users.string(K.API.FirstName)
             users.string(K.API.LastName)
@@ -73,7 +73,7 @@ final class User: Model {
     }
     
     static func revert(_ database: Database) throws {
-        try database.delete(K.API.Users)
+        try database.delete(K.API.Tables.Users)
     }
 }
 

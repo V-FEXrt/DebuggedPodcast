@@ -17,9 +17,13 @@ let protect = ProtectMiddleware(error: error)
 
 try drop.addProvider(VaporSQLite.Provider.self)
 drop.preparations.append(User.self)
+drop.preparations.append(Metadata.self)
+drop.preparations.append(Podcast.self)
 
 // MARK: Resources
-drop.resource(K.API.Users, UserController())
+drop.resource(K.API.Tables.Users, UserController())
+drop.resource(K.API.Tables.Metadatas, MetadataController())
+drop.resource(K.API.Tables.Podcasts, PodcastController())
 
 // MARK: Routes
 
