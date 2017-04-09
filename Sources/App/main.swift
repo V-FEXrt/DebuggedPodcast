@@ -7,6 +7,7 @@ let drop = Droplet()
 
 // MARK: Custom Commands
 drop.commands.append(SeedCommand(console: drop.console))
+drop.commands.append(SetMetadataCommand(console: drop.console))
 
 // MARK: Middleware
 
