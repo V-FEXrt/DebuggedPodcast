@@ -31,17 +31,29 @@ class MetadataController: ResourceRepresentable {
             ])
         
         
-        var metadata = Metadata(title: params.string[K.API.Title] ?? "",
-                                websiteURL: params.string[K.API.WebsiteURL] ?? "",
-                                copyright: params.string[K.API.Copyright] ?? "",
-                                subtitle: params.string[K.API.Subtitle] ?? "",
-                                summary: params.string[K.API.Summary] ?? "",
-                                description: params.string[K.API.Description] ?? "",
-                                ownerName: params.string[K.API.OwnerName] ?? "",
-                                ownerEmail: params.string[K.API.OwnerEmail] ?? "",
-                                image: params.string[K.API.ImageURL] ?? "",
-                                category: params.string[K.API.Category] ?? "",
-                                isExplicit: params.bool[K.API.IsExplicit] ?? true)
+        let title = params.string[K.API.Title] ?? ""
+        let websiteURL = params.string[K.API.WebsiteURL] ?? ""
+        let copyright = params.string[K.API.Copyright] ?? ""
+        let subtitle = params.string[K.API.Subtitle] ?? ""
+        let summary = params.string[K.API.Summary] ?? ""
+        let description = params.string[K.API.Description] ?? ""
+        let ownerName = params.string[K.API.OwnerName] ?? ""
+        let ownerEmail = params.string[K.API.OwnerEmail] ?? ""
+        let imageURL = params.string[K.API.ImageURL] ?? ""
+        let category = params.string[K.API.Category] ?? ""
+        let isExplicit = params.bool[K.API.IsExplicit] ?? true
+        
+        var metadata = Metadata(title: title,
+                                websiteURL: websiteURL,
+                                copyright: copyright,
+                                subtitle: subtitle,
+                                summary: summary,
+                                description: description,
+                                ownerName: ownerName,
+                                ownerEmail: ownerEmail,
+                                imageURL: imageURL,
+                                category: category,
+                                isExplicit: isExplicit)
         
         try metadata.save()
         return metadata
@@ -78,17 +90,29 @@ class MetadataController: ResourceRepresentable {
             ])
         
         
-        var metadata = Metadata(title: params.string[K.API.Title] ?? "",
-                                websiteURL: params.string[K.API.WebsiteURL] ?? "",
-                                copyright: params.string[K.API.Copyright] ?? "",
-                                subtitle: params.string[K.API.Subtitle] ?? "",
-                                summary: params.string[K.API.Summary] ?? "",
-                                description: params.string[K.API.Description] ?? "",
-                                ownerName: params.string[K.API.OwnerName] ?? "",
-                                ownerEmail: params.string[K.API.OwnerEmail] ?? "",
-                                image: params.string[K.API.ImageURL] ?? "",
-                                category: params.string[K.API.Category] ?? "",
-                                isExplicit: params.bool[K.API.IsExplicit] ?? true)
+        let title = params.string[K.API.Title] ?? ""
+        let websiteURL = params.string[K.API.WebsiteURL] ?? ""
+        let copyright = params.string[K.API.Copyright] ?? ""
+        let subtitle = params.string[K.API.Subtitle] ?? ""
+        let summary = params.string[K.API.Summary] ?? ""
+        let description = params.string[K.API.Description] ?? ""
+        let ownerName = params.string[K.API.OwnerName] ?? ""
+        let ownerEmail = params.string[K.API.OwnerEmail] ?? ""
+        let imageURL = params.string[K.API.ImageURL] ?? ""
+        let category = params.string[K.API.Category] ?? ""
+        let isExplicit = params.bool[K.API.IsExplicit] ?? true
+        
+        var metadata = Metadata(title: title,
+                                websiteURL: websiteURL,
+                                copyright: copyright,
+                                subtitle: subtitle,
+                                summary: summary,
+                                description: description,
+                                ownerName: ownerName,
+                                ownerEmail: ownerEmail,
+                                imageURL: imageURL,
+                                category: category,
+                                isExplicit: isExplicit)
         
         try metadata.save()
         return metadata

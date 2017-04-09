@@ -5,6 +5,9 @@ import Auth
 
 let drop = Droplet()
 
+// MARK: Custom Commands
+drop.commands.append(SeedCommand(console: drop.console))
+
 // MARK: Middleware
 
 let auth = AuthMiddleware(user: User.self)

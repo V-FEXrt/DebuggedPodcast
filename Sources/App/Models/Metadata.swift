@@ -20,13 +20,13 @@ final class Metadata: Model {
     var description: String
     var ownerName: String
     var ownerEmail: String
-    var image: String
+    var imageURL: String
     var category: String
     var isExplicit: Bool
     
     var exists: Bool = false
     
-    init(title: String, websiteURL: String, copyright: String, subtitle: String, summary: String, description: String, ownerName: String, ownerEmail: String, image: String, category: String, isExplicit: Bool) {
+    init(title: String, websiteURL: String, copyright: String, subtitle: String, summary: String, description: String, ownerName: String, ownerEmail: String, imageURL: String, category: String, isExplicit: Bool) {
         self.title = title
         self.websiteURL = websiteURL
         self.copyright = copyright
@@ -35,7 +35,7 @@ final class Metadata: Model {
         self.description = description
         self.ownerName = ownerName
         self.ownerEmail = ownerEmail
-        self.image = image
+        self.imageURL = imageURL
         self.category = category
         self.isExplicit = isExplicit
     }
@@ -50,7 +50,7 @@ final class Metadata: Model {
         description = try node.extract(K.API.Description)
         ownerName = try node.extract(K.API.OwnerName)
         ownerEmail = try node .extract(K.API.OwnerEmail)
-        image = try node.extract(K.API.ImageURL)
+        imageURL = try node.extract(K.API.ImageURL)
         category = try node.extract(K.API.Category)
         isExplicit = try node.extract(K.API.IsExplicit)
     }
@@ -66,7 +66,7 @@ final class Metadata: Model {
             K.API.Description : description,
             K.API.OwnerName : ownerName,
             K.API.OwnerEmail : ownerEmail,
-            K.API.ImageURL : image,
+            K.API.ImageURL : imageURL,
             K.API.Category : category,
             K.API.IsExplicit : isExplicit
             ])
