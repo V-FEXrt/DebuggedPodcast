@@ -92,28 +92,37 @@ class PodcastController: ResourceRepresentable {
                 K.API.Author : Type.String,
                 K.API.Summary : Type.String,
                 K.API.ImageURL : Type.String,
-                K.API.MediaURL : Type.String,
-                K.API.MediaLength : Type.Int,
-                K.API.MediaType : Type.String,
-                K.API.MediaDuration : Type.String,
-                K.API.GUID : Type.String,
-                K.API.PublishDate : Type.String,
-                ])
+                K.API.MediaDuration : Type.String
+            ])
         
+        guard let file = request.data[K.API.Media] as? FormData.Field else {
+            throw Abort.custom(status: Status.badRequest, message: "media should be type: Multipart Binary")
+        }
+        
+        guard let filename = file.filename else {
+            throw Abort.badRequest
+        }
+        
+        try Data(file.part.body).write(to: URL(fileURLWithPath: drop.workDir + "/Public/media/\(filename)"))
+        
+        let df:DateFormatter = DateFormatter()
+        df.dateFormat = "EEE, dd MMM yyyy HH:mm:ss Z"; //RFC2822-Format
+        df.locale = Locale(identifier: "en_US_POSIX")
+        let date:String = df.string(from: Date())
         
         var podcast = Podcast(title: params.string[K.API.Title] ?? "",
                               author: params.string[K.API.Author] ?? "",
                               subtitle: params.string[K.API.Subtitle] ?? "",
                               summary: params.string[K.API.Summary] ?? "",
                               imageURL: params.string[K.API.ImageURL] ?? "",
-                              mediaURL: params.string[K.API.MediaURL] ?? "",
-                              mediaLength: params.int[K.API.MediaLength] ?? -1,
-                              mediaType: params.string[K.API.MediaType] ?? "",
-                              mediaDuration: params.string[K.API.MediaDuration] ?? "",
-                              GUID: params.string[K.API.GUID] ?? "",
-                              publishDate: params.string[K.API.PublishDate] ?? "",
-                              createdBy: user.id?.int ?? -1,
-                              metadata: metadata?.id?.int ?? -1)
+                              mediaURL: "./media/\(filename)",
+            mediaLength: file.part.body.count,
+            mediaType: "audio/mpeg",
+            mediaDuration: params.string[K.API.MediaDuration] ?? "",
+            GUID: UUID().uuidString,
+            publishDate: date,
+            createdBy: user.id?.int ?? -1,
+            metadata: metadata?.id?.int ?? -1)
         
         try podcast.save()
         return podcast
