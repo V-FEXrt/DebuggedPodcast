@@ -83,7 +83,7 @@ final class SetMetadataCommand: Command {
             return
         }
         
-        console.success("Database seed complete")
+        console.success("Metadata set!")
         console.print()
     }
 
