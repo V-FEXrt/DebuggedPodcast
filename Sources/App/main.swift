@@ -26,7 +26,6 @@ drop.preparations.append(Metadata.self)
 drop.preparations.append(Podcast.self)
 
 // MARK: Resources
-drop.resource(K.API.Tables.Users, UserController())
 drop.resource(K.API.Tables.Metadatas, MetadataController())
 drop.resource(K.API.Tables.Podcasts, PodcastController())
 
@@ -65,14 +64,17 @@ drop.post("login") { req in
 // MARK: Authorized Routes
 
 
-drop.grouped(protect).group("admin") { admin in
-    admin.get { req in
+drop.grouped(protect).group("") { admin in
+    admin.get("/admin") { req in
         guard let user = try req.auth.user() as? User else {
             throw Abort.custom(status: .badRequest, message: "Invalid user type.")
         }
         
         return "Welcome to the admin page \(user.firstName)"
     }
+    
+    // MARK: Authorized Resource
+    admin.resource(K.API.Tables.Users, UserController())
 }
 
 
