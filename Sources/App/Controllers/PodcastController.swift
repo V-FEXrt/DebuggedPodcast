@@ -15,6 +15,9 @@ class PodcastController: ResourceRepresentable {
     }
     
     func create(request: Request) throws -> ResponseRepresentable {
+        let user = try requireAuth(req: request)
+        let metadata = try Metadata.all().first
+        
         let params = try Validator.validate(req: request, expected:
             [
                 K.API.Title : Type.String,
@@ -28,11 +31,9 @@ class PodcastController: ResourceRepresentable {
                 K.API.MediaDuration : Type.String,
                 K.API.GUID : Type.String,
                 K.API.PublishDate : Type.String,
-                K.API.CreatedBy : Type.Int,
-                K.API.Metadata : Type.Int
             ])
         
-    
+        
         var podcast = Podcast(title: params.string[K.API.Title] ?? "",
                               author: params.string[K.API.Author] ?? "",
                               subtitle: params.string[K.API.Subtitle] ?? "",
@@ -44,8 +45,8 @@ class PodcastController: ResourceRepresentable {
                               mediaDuration: params.string[K.API.MediaDuration] ?? "",
                               GUID: params.string[K.API.GUID] ?? "",
                               publishDate: params.string[K.API.PublishDate] ?? "",
-                              createdBy: params.int[K.API.CreatedBy] ?? -1,
-                              metadata: params.int[K.API.Metadata] ?? -1)
+                              createdBy: user.id?.int ?? -1,
+                              metadata: metadata?.id?.int ?? -1)
         
         try podcast.save()
         return podcast
@@ -56,16 +57,23 @@ class PodcastController: ResourceRepresentable {
     }
     
     func delete(request: Request, podcast: Podcast) throws -> ResponseRepresentable {
+        _ = try requireAuth(req: request)
+        
         try podcast.delete()
         return JSON([:])
     }
     
     func clear(request: Request) throws -> ResponseRepresentable {
+        _ = try requireAuth(req: request)
+        
         try Podcast.query().delete()
         return JSON([])
     }
     
     func update(request: Request, podcast: Podcast) throws -> ResponseRepresentable {
+        let user = try requireAuth(req: request)
+        let metadata = try Metadata.all().first
+        
         let params = try Validator.validate(req: request, expected:
             [
                 K.API.Title : Type.String,
@@ -79,9 +87,7 @@ class PodcastController: ResourceRepresentable {
                 K.API.MediaDuration : Type.String,
                 K.API.GUID : Type.String,
                 K.API.PublishDate : Type.String,
-                K.API.CreatedBy : Type.Int,
-                K.API.Metadata : Type.Int
-            ])
+                ])
         
         
         var podcast = Podcast(title: params.string[K.API.Title] ?? "",
@@ -95,14 +101,15 @@ class PodcastController: ResourceRepresentable {
                               mediaDuration: params.string[K.API.MediaDuration] ?? "",
                               GUID: params.string[K.API.GUID] ?? "",
                               publishDate: params.string[K.API.PublishDate] ?? "",
-                              createdBy: params.int[K.API.CreatedBy] ?? -1,
-                              metadata: params.int[K.API.Metadata] ?? -1)
+                              createdBy: user.id?.int ?? -1,
+                              metadata: metadata?.id?.int ?? -1)
         
         try podcast.save()
         return podcast
     }
     
     func replace(request: Request, podcast: Podcast) throws -> ResponseRepresentable {
+        _ = try requireAuth(req: request)
         try podcast.delete()
         return try create(request: request)
     }
@@ -118,5 +125,12 @@ class PodcastController: ResourceRepresentable {
             clear: clear
         )
     }
-
+    
+    private func requireAuth(req: Request) throws -> User {
+        guard let user = try req.auth.user() as? User else {
+            throw Abort.custom(status: Status.unauthorized, message: "Unauthorized")
+        }
+        return user
+    }
+    
 }
