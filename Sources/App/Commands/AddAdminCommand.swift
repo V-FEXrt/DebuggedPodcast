@@ -33,12 +33,8 @@ final class AddAdminCommand: Command {
             email = console.ask("Email: ")
             
             while true {
-                console.output("Password: ", style: .info, newLine: true)
-                console.output("> ", style: .info, newLine: false)
-                password = console.ask("", style: .custom(ConsoleColor.black))
-                console.output("Password: ", style: .info, newLine: true)
-                console.output("> ", style: .info, newLine: false)
-                if(password != console.ask("Retype Password: ", style: .custom(.black))){
+                password = console.ask("Password: ")
+                if(password != console.ask("Retype Password: ")){
                     console.error("Password mismatch. Try again")
                     console.print()
                 }else{
@@ -53,7 +49,7 @@ final class AddAdminCommand: Command {
             console.print("Last Name: " + lastName)
             console.print("Email: " + email)
             
-        } while console.ask("Is the Admin info correct? (y/n):").trim().lowercased() != "y"
+        } while console.ask("Is the Admin info correct? (y/n): ").trim().lowercased() != "y"
         
         do {
             var user = try User(first: firstName, last: lastName, email: email, password: password)
