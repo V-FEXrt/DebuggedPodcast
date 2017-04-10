@@ -41,6 +41,7 @@ struct K {
         static let PublishDate = "publish_date"
         static let CreatedBy = "created_by"
         static let Metadata = "metadata"
+        static let Media = "media"
         
 
         
