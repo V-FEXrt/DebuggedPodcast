@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+<channel>
+<title>#(title)</title>
+<link>#(website_url)</link>
+<language>en-us</language>
+<copyright>#(copyright)</copyright>
+<itunes:subtitle>#(subtitle)</itunes:subtitle>
+<itunes:author>#(author)</itunes:author>
+<itunes:summary>#(summary)</itunes:summary>
+<description>#(description)</description>
+<itunes:owner>
+<itunes:name>#(owner_name)</itunes:name>
+<itunes:email>#(owner_email)</itunes:email>
+</itunes:owner>
+<itunes:image href="#(image_url)" />
+<itunes:category text="#(category)"/>
+#if(is_explicit) {
+<itunes:explicit>yes</itunes:explicit>
+} ##else() {
+<itunes:explicit>no</itunes:explicit>
+}
+
+#loop(podcasts, "podcasts") {
+<item>
+<title>#(podcasts.title)</title>
+<itunes:author>#(podcasts.author)</itunes:author>
+<itunes:subtitle>#(podcasts.subtitle)</itunes:subtitle>
+<itunes:summary>#(podcasts.summary)</itunes:summary>
+<itunes:image href="#(podcasts.image_url)" />
+<enclosure url="#(podcasts.media_url)" length="#(podcasts.media_length)" type="#(podcasts.media_type)" />
+<guid>#(podcasts.guid)</guid>
+<pubDate>#(podcasts.publish_date)</pubDate>
+<itunes:duration>#(podcasts.media_duration)</itunes:duration>
+</item>
+}
+
+</channel>
+</rss>

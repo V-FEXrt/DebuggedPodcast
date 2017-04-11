@@ -16,6 +16,7 @@ final class Metadata: Model {
     var websiteURL: String
     var copyright: String
     var subtitle: String
+    var author: String
     var summary: String
     var description: String
     var ownerName: String
@@ -26,11 +27,12 @@ final class Metadata: Model {
     
     var exists: Bool = false
     
-    init(title: String, websiteURL: String, copyright: String, subtitle: String, summary: String, description: String, ownerName: String, ownerEmail: String, imageURL: String, category: String, isExplicit: Bool) {
+    init(title: String, websiteURL: String, copyright: String, subtitle: String, author: String, summary: String, description: String, ownerName: String, ownerEmail: String, imageURL: String, category: String, isExplicit: Bool) {
         self.title = title
         self.websiteURL = websiteURL
         self.copyright = copyright
         self.subtitle = subtitle
+        self.author = author
         self.summary = summary
         self.description = description
         self.ownerName = ownerName
@@ -46,6 +48,7 @@ final class Metadata: Model {
         websiteURL = try node.extract(K.API.WebsiteURL)
         copyright = try node.extract(K.API.Copyright)
         subtitle = try node.extract(K.API.Subtitle)
+        author = try node.extract(K.API.Author)
         summary = try node.extract(K.API.Summary)
         description = try node.extract(K.API.Description)
         ownerName = try node.extract(K.API.OwnerName)
@@ -62,6 +65,7 @@ final class Metadata: Model {
             K.API.WebsiteURL : websiteURL,
             K.API.Copyright : copyright,
             K.API.Subtitle : subtitle,
+            K.API.Author: author,
             K.API.Summary : summary,
             K.API.Description : description,
             K.API.OwnerName : ownerName,
@@ -79,6 +83,7 @@ final class Metadata: Model {
             metadata.string(K.API.WebsiteURL)
             metadata.string(K.API.Copyright)
             metadata.string(K.API.Subtitle)
+            metadata.string(K.API.Author)
             metadata.string(K.API.Summary)
             metadata.string(K.API.Description)
             metadata.string(K.API.OwnerName)

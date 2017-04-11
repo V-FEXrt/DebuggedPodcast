@@ -53,7 +53,7 @@ final class SeedCommand: Command {
             
             console.print("User created")
             console.print()
-            console.print("Email: 'test@dbp.com'")
+            console.print("Email: 'test@debuggedpodcast.com'")
             console.print("Password: 'password'")
             console.print()
             
@@ -71,13 +71,14 @@ final class SeedCommand: Command {
         
         var metadata = Metadata(title: "Debugged Podcast",
                                 websiteURL: "http://debuggedpodcast.com",
-                                copyright: "&#x2117; &amp; &#xA9; 2017 Debugged Podcast",
+                                copyright: "© 2017 Debugged Podcast",
                                 subtitle: "Banter you didn't know you could care about",
+                                author: "Eric Schmar, Tyler Aden, Matthew Wilderson, Ashley Coleman",
                                 summary: "We are a group of computer science (and mathematics) majors at Kansas State University. This podcast contains a free range of topics; some funny, some serious, and some just strange.",
                                 description: "We are a group of computer science (and mathematics) majors at Kansas State University. This podcast contains a free range of topics; some funny, some serious, and some just strange.",
                                 ownerName: "Ashley Coleman",
                                 ownerEmail: "test@debuggedpodcast.com",
-                                imageURL: "http://colesterproductions.com/podcasts/debugged/cover.jpg",
+                                imageURL: "http://debuggedpodcast.com/images/cover.jpg",
                                 category: "Comedy",
                                 isExplicit: true)
         
@@ -98,22 +99,22 @@ final class SeedCommand: Command {
         console.print("Creating Podcasts...")
         
         do {
-            for i in 0..<5 {
-                var podcast = Podcast(title: "Title\(i)",
-                                      author: "Author\(i)",
-                                      subtitle: "Subtitle\(i)",
-                                      summary: "Summary\(i)",
-                                      imageURL: "ImageURL\(i)",
-                                      mediaURL: "mediaURL\(i)",
-                                      mediaLength: (i*1000)+500,
-                                      mediaType: "mediaType\(i)",
-                                      mediaDuration: "mediaDuration\(i)",
-                                      GUID: "GUID\(i)",
-                                      publishDate: "publishDate\(i)",
-                                      createdBy: user.id!.int!,
-                                      metadata: metadata.id!.int!)
-                try podcast.save()
-            }
+
+            var podcast = Podcast(title: "dun even matter",
+                                  author: "Eric Schmar, Tyler Aden, Jake Ehrlich, Ashley Coleman",
+                                  subtitle: "",
+                                  summary: "The pals have a heated rant about things that don't matter with special guest business man Jake Ehrlich.",
+                                  imageURL: "http://debuggedpodcast.com/images/cover.jpg",
+                                  mediaURL: "http://debuggedpodcast.com/media/ep10.mp3",
+                                  mediaLength: 36409869,
+                                  mediaType: "audio/mpeg",
+                                  mediaDuration: "24:11",
+                                  GUID: "612701D9-CC58-4CB8-AA79-1BAD467C5370",
+                                  publishDate: "Sat, 11 Mar 2017 14:58:05 -0000",
+                                  createdBy: user.id!.int!,
+                                  metadata: metadata.id!.int!)
+            try podcast.save()
+
         }catch {
             console.error("\(error)")
             console.error("Error creating Podcasts. Aborting")

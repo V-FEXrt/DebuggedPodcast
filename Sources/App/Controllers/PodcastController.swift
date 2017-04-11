@@ -26,16 +26,21 @@ class PodcastController: ResourceRepresentable {
                 K.API.Subtitle : Type.String,
                 K.API.Author : Type.String,
                 K.API.Summary : Type.String,
-                K.API.ImageURL : Type.String,
                 K.API.MediaDuration : Type.String
             ])
+
+        
+        var imageURL = metadata?.imageURL ?? ""
+        let domain = metadata?.websiteURL ?? ""
+        
+        let filename = try "ep\(Podcast.all().count).mp3"
+        
+        if let url = request.data[K.API.ImageURL]?.string {
+            imageURL = url
+        }
         
         guard let file = request.data[K.API.Media] as? FormData.Field else {
             throw Abort.custom(status: Status.badRequest, message: "media should be type: Multipart Binary")
-        }
-        
-        guard let filename = file.filename else {
-            throw Abort.badRequest
         }
         
         try Data(file.part.body).write(to: URL(fileURLWithPath: drop.workDir + "/Public/media/\(filename)"))
@@ -49,8 +54,8 @@ class PodcastController: ResourceRepresentable {
                               author: params.string[K.API.Author] ?? "",
                               subtitle: params.string[K.API.Subtitle] ?? "",
                               summary: params.string[K.API.Summary] ?? "",
-                              imageURL: params.string[K.API.ImageURL] ?? "",
-                              mediaURL: "./media/\(filename)",
+                              imageURL: imageURL,
+                              mediaURL: "\(domain)/media/\(filename)",
                               mediaLength: file.part.body.count,
                               mediaType: "audio/mpeg",
                               mediaDuration: params.string[K.API.MediaDuration] ?? "",
@@ -80,54 +85,7 @@ class PodcastController: ResourceRepresentable {
         try Podcast.query().delete()
         return JSON([])
     }
-    
-    func update(request: Request, podcast: Podcast) throws -> ResponseRepresentable {
-        let user = try requireAuth(req: request)
-        let metadata = try Metadata.all().first
-        
-        let params = try Validator.validate(req: request, expected:
-            [
-                K.API.Title : Type.String,
-                K.API.Subtitle : Type.String,
-                K.API.Author : Type.String,
-                K.API.Summary : Type.String,
-                K.API.ImageURL : Type.String,
-                K.API.MediaDuration : Type.String
-            ])
-        
-        guard let file = request.data[K.API.Media] as? FormData.Field else {
-            throw Abort.custom(status: Status.badRequest, message: "media should be type: Multipart Binary")
-        }
-        
-        guard let filename = file.filename else {
-            throw Abort.badRequest
-        }
-        
-        try Data(file.part.body).write(to: URL(fileURLWithPath: drop.workDir + "/Public/media/\(filename)"))
-        
-        let df:DateFormatter = DateFormatter()
-        df.dateFormat = "EEE, dd MMM yyyy HH:mm:ss Z"; //RFC2822-Format
-        df.locale = Locale(identifier: "en_US_POSIX")
-        let date:String = df.string(from: Date())
-        
-        var podcast = Podcast(title: params.string[K.API.Title] ?? "",
-                              author: params.string[K.API.Author] ?? "",
-                              subtitle: params.string[K.API.Subtitle] ?? "",
-                              summary: params.string[K.API.Summary] ?? "",
-                              imageURL: params.string[K.API.ImageURL] ?? "",
-                              mediaURL: "./media/\(filename)",
-            mediaLength: file.part.body.count,
-            mediaType: "audio/mpeg",
-            mediaDuration: params.string[K.API.MediaDuration] ?? "",
-            GUID: UUID().uuidString,
-            publishDate: date,
-            createdBy: user.id?.int ?? -1,
-            metadata: metadata?.id?.int ?? -1)
-        
-        try podcast.save()
-        return podcast
-    }
-    
+
     func replace(request: Request, podcast: Podcast) throws -> ResponseRepresentable {
         _ = try requireAuth(req: request)
         try podcast.delete()
@@ -140,7 +98,7 @@ class PodcastController: ResourceRepresentable {
             store: create,
             show: show,
             replace: replace,
-            modify: update,
+            /*modify: update,*/
             destroy: delete,
             clear: clear
         )

@@ -24,6 +24,7 @@ final class SetMetadataCommand: Command {
         
         var title = ""
         var subtitle = ""
+        var author = ""
         var summary = ""
         var description = ""
         var websiteURL = ""
@@ -37,6 +38,7 @@ final class SetMetadataCommand: Command {
         repeat {
             title = console.ask("Podcast Title: ")
             subtitle = console.ask("Podcast Subtitle: ")
+            author = console.ask("Podcast Author(s): ")
             summary = console.ask("Podcast Summary: ")
             description = console.ask("Podcast Description: ")
             category = console.ask("Podcast Category: ")
@@ -51,6 +53,7 @@ final class SetMetadataCommand: Command {
             
             console.print("Title: " + title)
             console.print("Podcast Subtitle: " + subtitle)
+            console.print("Podcast Author(s): " + author)
             console.print("Podcast Summary: " + summary)
             console.print("Podcast Description: " + description)
             console.print("Podcast Category: " + category)
@@ -68,6 +71,7 @@ final class SetMetadataCommand: Command {
                                     websiteURL: websiteURL,
                                     copyright: copyright,
                                     subtitle: subtitle,
+                                    author: author,
                                     summary: summary,
                                     description: description,
                                     ownerName: ownerName,
