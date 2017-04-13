@@ -17,7 +17,8 @@ body {
 p,
 h1,
 h3,
-small {
+small,
+label {
   color: #BABABA;
   white-space: nowrap;
   overflow: hidden;
@@ -40,6 +41,11 @@ h2 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+button {
+  position: absolute;
+  bottom: 0;
 }
 
 
