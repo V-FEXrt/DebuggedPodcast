@@ -12,12 +12,11 @@ First, you need to install the vapor toolbox to run the commands from the comman
 Next, make a directory for the database under the root repository folder (should be DebuggedPodcast): `mkdir Data`
 
 Next, we will start the server, which creates the database (which is necessary to seed) and then stop the server so we can seed the database:
-`vapor build`
-`vapor run serve`
+```vapor build
+vapor run serve
 ctrl-c
-`.build/debug/App seed`
-`vapor run serve`
-
+.build/debug/App seed
+vapor run serve```
 
 
 ## 💧 Community
