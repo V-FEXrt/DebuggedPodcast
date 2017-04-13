@@ -6,7 +6,6 @@ var podcasts = {
     get: function(id, callback) { get("./podcasts/" + id, callback); },
     post: function(params, callback) { post("./podcasts/", params, callback); },
     delete: function(id, callback) { del("./podcasts/" + id, callback); },
-    // TODO: Delete
     // TODO: Update
 }
 
@@ -20,7 +19,6 @@ var users = {
     get: function(id, callback) { get("./users/" + id, callback); },
     post: function(params, callback) { post("./users/", params, callback); },
     delete: function(id, callback) { del("./users/" + id, callback); },
-    // TODO: Delete
     // TODO: Update
 }
 
@@ -84,14 +82,16 @@ function del(url, callback) {
 
 },{}],2:[function(require,module,exports){
 var api = require('./api');
-window.api = api;
+var view = require('./view')
 
 api.podcasts.index(function(err, response){
   if(err){
     console.log(err.message);
     return;
   }
+  console.log("podcast index")
   console.log(response);
+  view.getPodcastsAndUpdate(response)
 });
 
 api.podcasts.get(1, function(err, response){
@@ -99,6 +99,7 @@ api.podcasts.get(1, function(err, response){
     console.log(err.message);
     return;
   }
+  console.log("podcast get")
   console.log(response);
 });
 
@@ -109,7 +110,7 @@ var params = {
     author : "Author",
     summary : "Summary",
     media_duration : "12:34",
-    media : null // TODO: This will cause the server to throw an err. This should be the file from the user
+    media : null // TODO: This will cause the server to throw an error. This should be the file from the user
 }
 
 api.podcasts.post(params, function(err, response){
@@ -126,6 +127,7 @@ api.metadata.index(function(err, response){
     console.log(err.message);
     return;
   }
+  console.log("metadata index")
   console.log(response);
 });
 
@@ -134,6 +136,7 @@ api.metadata.get(1, function(err, response){
     console.log(err.message);
     return;
   }
+  console.log("metadata get")
   console.log(response);
 });
 
@@ -142,7 +145,32 @@ api.utils.login("test@debuggedpodcast.com", "password", function(err, response){
     console.log(err.message);
     return;
   }
+  console.log("utils login")
   console.log(response);
 });
 
-},{"./api":1}]},{},[2]);
+},{"./api":1,"./view":3}],3:[function(require,module,exports){
+
+module.exports = {
+  getPodcastsAndUpdate: getPodcastsAndUpdate
+}
+
+function getPodcastsAndUpdate(podcasts){
+  if(podcasts){
+    $('#most-recent-image').attr('src',podcasts[0].image_url)
+    $('#most-recent-subtitle').text(podcasts[0].title)
+    $('#most-recent-description').text('').text(podcasts[0].summary)
+    $('#player').attr('src', podcasts[0].media_url)
+
+    podcasts.slice(1).forEach(updatePodcast)
+  }
+};
+
+function updatePodcast(podcast, index){
+  console.log("update podcast")
+  console.log(podcast)
+  $('#podcast-' + index + '.h2').text(podcast.title)
+  $('#podcast-' + index + '.img').attr('src', podcast.image_url)
+};
+
+},{}]},{},[2]);

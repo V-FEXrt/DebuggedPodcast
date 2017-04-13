@@ -1,11 +1,14 @@
 var api = require('./api');
+var view = require('./view')
 
 api.podcasts.index(function(err, response){
   if(err){
     console.log(err.message);
     return;
   }
+  console.log("podcast index")
   console.log(response);
+  view.getPodcastsAndUpdate(response)
 });
 
 api.podcasts.get(1, function(err, response){
@@ -13,6 +16,7 @@ api.podcasts.get(1, function(err, response){
     console.log(err.message);
     return;
   }
+  console.log("podcast get")
   console.log(response);
 });
 
@@ -40,6 +44,7 @@ api.metadata.index(function(err, response){
     console.log(err.message);
     return;
   }
+  console.log("metadata index")
   console.log(response);
 });
 
@@ -48,6 +53,7 @@ api.metadata.get(1, function(err, response){
     console.log(err.message);
     return;
   }
+  console.log("metadata get")
   console.log(response);
 });
 
@@ -56,5 +62,6 @@ api.utils.login("test@debuggedpodcast.com", "password", function(err, response){
     console.log(err.message);
     return;
   }
+  console.log("utils login")
   console.log(response);
 });
