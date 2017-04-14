@@ -13,62 +13,62 @@ final class SeedCommand: Command {
     public let id = "seed"
     public let help = ["Seed the database with test values"]
     public let console: ConsoleProtocol
-    
+
     public init(console: ConsoleProtocol) {
         self.console = console
     }
-    
+
     public func run(arguments: [String]) throws {
-        
-        
+
+
         User.database = drop.database
         Metadata.database = drop.database
         Podcast.database = drop.database
-        
+
         console.print("Seeding the database")
         console.print()
-        
+
         guard let user = createUser() else {
             return
         }
-        
+
         guard let metadata = createMetadata() else {
             return
         }
-        
+
         if(!createPodcasts(user: user, metadata: metadata)){
             return
         }
-        
+
         console.success("Database seed complete")
         console.print()
     }
-    
+
     private func createUser() -> User? {
         console.print("Creating Test User...")
-        
+
         do {
             var user = try User(first: "Ashley", last: "Coleman", email: "test@debuggedpodcast.com", password: "password")
             try user.save()
-            
+
             console.print("User created")
             console.print()
             console.print("Email: 'test@debuggedpodcast.com'")
             console.print("Password: 'password'")
             console.print()
-            
+
             return user
         } catch {
             console.error("\(error)")
             console.error("Error creating user. Aborting")
-            
+
             return nil
         }
     }
-    
+
     private func createMetadata() -> Metadata? {
         console.print("Creating Podcast Metadata...")
-        
+
         var metadata = Metadata(title: "Debugged Podcast",
                                 websiteURL: "http://debuggedpodcast.com",
                                 copyright: "© 2017 Debugged Podcast",
@@ -78,15 +78,15 @@ final class SeedCommand: Command {
                                 description: "We are a group of computer science (and mathematics) majors at Kansas State University. This podcast contains a free range of topics; some funny, some serious, and some just strange.",
                                 ownerName: "Ashley Coleman",
                                 ownerEmail: "test@debuggedpodcast.com",
-                                imageURL: "http://debuggedpodcast.com/images/cover.jpg",
+                                imageURL: "http://debuggedpodcast.com/images/logo.png",
                                 category: "Comedy",
                                 isExplicit: true)
-        
+
         do {
             try metadata.save()
             console.print("Podcast Metadata created")
             console.print()
-            
+
             return metadata
         } catch {
             console.error("\(error)")
@@ -94,10 +94,10 @@ final class SeedCommand: Command {
             return nil
         }
     }
-    
+
     private func createPodcasts(user: User, metadata: Metadata) -> Bool {
         console.print("Creating Podcasts...")
-        
+
         do {
 
             var podcast = Podcast(title: "dun even matter",

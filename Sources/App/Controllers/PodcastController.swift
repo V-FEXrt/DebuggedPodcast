@@ -40,7 +40,7 @@ class PodcastController: ResourceRepresentable {
         }
         
         guard let file = request.data[K.API.Media] as? FormData.Field else {
-            throw Abort.custom(status: Status.badRequest, message: "media should be type: Multipart Binary")
+            throw Abort.custom(status: Status.badRequest, message: "'media' should be type: Multipart Binary")
         }
         
         try Data(file.part.body).write(to: URL(fileURLWithPath: drop.workDir + "/Public/media/\(filename)"))

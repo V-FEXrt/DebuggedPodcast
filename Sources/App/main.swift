@@ -26,6 +26,7 @@ drop.preparations.append(Metadata.self)
 drop.preparations.append(Podcast.self)
 
 // MARK: Resources
+
 drop.resource(K.API.Tables.Metadatas, MetadataController())
 drop.resource(K.API.Tables.Podcasts, PodcastController())
 
@@ -103,7 +104,7 @@ drop.post("login") { req in
     
     try req.auth.login(key)
     
-    return "Logged In"
+    return JSON([])
 }
 
 // MARK: Authorized Routes
