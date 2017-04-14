@@ -36,13 +36,17 @@ drop.get { req in
     return try drop.view.make("index.html")
 }
 
+drop.get("archive") { req in
+    return try drop.view.make("archive.html")
+}
+
 drop.get("login") { req in
     return try drop.view.make("login.html")
 }
 
 drop.get("feed/podcast.rss") { req in
     var podcasts:[Node] = []
-    
+
     for podcast in try Podcast.all() {
         let node:Node = [
             K.API.Title : Node(podcast.title),
@@ -57,14 +61,14 @@ drop.get("feed/podcast.rss") { req in
             K.API.GUID : Node(podcast.GUID),
             K.API.PublishDate : Node(podcast.publishDate)
         ]
-        
+
         podcasts.append(node)
     }
-    
+
     guard let metadata = try Metadata.all().first else {
         throw Abort.badRequest
     }
-    
+
     let response = try drop.view.make("feed", [
         K.API.Title : Node(metadata.title),
         K.API.WebsiteURL : Node(metadata.websiteURL),
@@ -80,7 +84,7 @@ drop.get("feed/podcast.rss") { req in
         K.API.IsExplicit : Node(metadata.isExplicit),
         K.API.Tables.Podcasts : Node(podcasts)
         ]).makeResponse()
-    
+
     response.headers["Content-Type"] = "application/xml"
     return response
 }
@@ -91,19 +95,19 @@ drop.post("login") { req in
         K.API.Email : Type.String,
         K.API.Password: Type.String
     ])
-    
+
     let email = params.string[K.API.Email] ?? ""
-    
+
     guard let user = try User.query().filter(K.API.Email, email).first() else {
         throw Abort.notFound
     }
-    
+
     let crypted =  try User.cryptPassword(password: params.string[K.API.Password] ?? "", salt: user.salt)
-    
+
     let key = APIKey(id: params.string[K.API.Email] ?? "", secret: crypted)
-    
+
     try req.auth.login(key)
-    
+
     return JSON([])
 }
 
@@ -115,10 +119,10 @@ drop.grouped(protect).group("") { admin in
         guard let user = try req.auth.user() as? User else {
             throw Abort.custom(status: .badRequest, message: "Invalid user type.")
         }
-        
+
         return "Welcome to the admin page \(user.firstName)"
     }
-    
+
     // MARK: Authorized Resource
     admin.resource(K.API.Tables.Users, UserController())
 }

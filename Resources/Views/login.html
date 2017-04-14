@@ -1,11 +1,37 @@
 <html>
-    <header><title>Login</title></header>
-    <body>
-        <form action="/login" method="POST">
-            Email: <input type="text" name="email"><br>
-            Password: <input type="text" name="password"><br>
-            <input type="submit" value="Submit">
-        </form>
-    </body>
-</html>
+<header>
+    <title>Login</title>
+</header>
+<!-- Bootstrap Core CSS -->
+<link href="../styles/bootstrap.min.css" rel="stylesheet">
 
+<!-- Custom CSS -->
+<link href="../styles/portfolio-item.css" rel="stylesheet">
+
+<body>
+    <div class="col-md-4">
+        <form>
+            <div class="form-group">
+                <label for="inputEmail1">Email address</label>
+                <input type="email" class="form-control" id="inputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="inputPassword1">Password</label>
+                <input type="password" class="form-control" id="inputPassword1" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Client Scrips -->
+<script src="./scripts/bundle.js"></script>
+
+</html>
