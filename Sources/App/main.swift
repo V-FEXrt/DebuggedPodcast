@@ -9,6 +9,7 @@ let drop = Droplet()
 drop.commands.append(SeedCommand(console: drop.console))
 drop.commands.append(SetMetadataCommand(console: drop.console))
 drop.commands.append(AddAdminCommand(console: drop.console))
+drop.commands.append(ImportRSSCommand(console: drop.console))
 
 // MARK: Middleware
 
