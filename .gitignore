@@ -5,3 +5,4 @@ xcuserdata
 Config/secrets
 Data/
 .DS_Store
+/Public/media

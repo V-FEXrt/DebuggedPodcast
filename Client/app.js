@@ -7,8 +7,7 @@ api.podcasts.index(function(err, response){
     return;
   }
   console.log("podcast index")
-  console.log(response);
-  view.getPodcastsAndUpdate(response)
+  view.getPodcastsAndUpdate(response, response.length - 1)
 });
 
 api.podcasts.get(1, function(err, response){
@@ -17,7 +16,7 @@ api.podcasts.get(1, function(err, response){
     return;
   }
   console.log("podcast get")
-  console.log(response);
+  //console.log(response);
 });
 
 /*
@@ -45,7 +44,7 @@ api.metadata.index(function(err, response){
     return;
   }
   console.log("metadata index")
-  console.log(response);
+  //console.log(response);
 });
 
 api.metadata.get(1, function(err, response){
@@ -54,7 +53,7 @@ api.metadata.get(1, function(err, response){
     return;
   }
   console.log("metadata get")
-  console.log(response);
+  //console.log(response);
 });
 
 api.utils.login("test@debuggedpodcast.com", "password", function(err, response){
@@ -63,5 +62,5 @@ api.utils.login("test@debuggedpodcast.com", "password", function(err, response){
     return;
   }
   console.log("utils login")
-  console.log(response);
+  //console.log(response);
 });

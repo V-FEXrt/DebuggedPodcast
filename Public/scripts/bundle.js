@@ -90,8 +90,7 @@ api.podcasts.index(function(err, response){
     return;
   }
   console.log("podcast index")
-  console.log(response);
-  view.getPodcastsAndUpdate(response)
+  view.getPodcastsAndUpdate(response, response.length - 1)
 });
 
 api.podcasts.get(1, function(err, response){
@@ -100,7 +99,7 @@ api.podcasts.get(1, function(err, response){
     return;
   }
   console.log("podcast get")
-  console.log(response);
+  //console.log(response);
 });
 
 /*
@@ -128,7 +127,7 @@ api.metadata.index(function(err, response){
     return;
   }
   console.log("metadata index")
-  console.log(response);
+  //console.log(response);
 });
 
 api.metadata.get(1, function(err, response){
@@ -137,7 +136,7 @@ api.metadata.get(1, function(err, response){
     return;
   }
   console.log("metadata get")
-  console.log(response);
+  //console.log(response);
 });
 
 api.utils.login("test@debuggedpodcast.com", "password", function(err, response){
@@ -146,7 +145,7 @@ api.utils.login("test@debuggedpodcast.com", "password", function(err, response){
     return;
   }
   console.log("utils login")
-  console.log(response);
+  //console.log(response);
 });
 
 },{"./api":1,"./view":3}],3:[function(require,module,exports){
@@ -155,22 +154,22 @@ module.exports = {
   getPodcastsAndUpdate: getPodcastsAndUpdate
 }
 
-function getPodcastsAndUpdate(podcasts){
+function getPodcastsAndUpdate(podcasts, start){
   if(podcasts){
-    $('#most-recent-image').attr('src',podcasts[0].image_url)
-    $('#most-recent-subtitle').text(podcasts[0].title)
-    $('#most-recent-description').text('').text(podcasts[0].summary)
-    $('#player').attr('src', podcasts[0].media_url)
+    $('#most-recent-image').attr('src',podcasts[start].image_url)
+    $('#most-recent-subtitle').text(podcasts[start].title)
+    $('#most-recent-description').text('').text(podcasts[start].summary)
+    $('#player').attr('src', podcasts[start].media_url)
 
-    podcasts.slice(1).forEach(updatePodcast)
+    podcasts.slice(start - 5, start - 1).reverse().forEach(updatePodcast)
   }
 };
 
 function updatePodcast(podcast, index){
   console.log("update podcast")
   console.log(podcast)
-  $('#podcast-' + index + '.h2').text(podcast.title)
-  $('#podcast-' + index + '.img').attr('src', podcast.image_url)
+  $('#recent-header-' + (index + 1)).text(podcast.title)
+  $('#recent-image-' + (index + 1)).attr('src', podcast.image_url)
 };
 
 },{}]},{},[2]);

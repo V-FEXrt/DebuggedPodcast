@@ -3,20 +3,20 @@ module.exports = {
   getPodcastsAndUpdate: getPodcastsAndUpdate
 }
 
-function getPodcastsAndUpdate(podcasts){
+function getPodcastsAndUpdate(podcasts, start){
   if(podcasts){
-    $('#most-recent-image').attr('src',podcasts[0].image_url)
-    $('#most-recent-subtitle').text(podcasts[0].title)
-    $('#most-recent-description').text('').text(podcasts[0].summary)
-    $('#player').attr('src', podcasts[0].media_url)
+    $('#most-recent-image').attr('src',podcasts[start].image_url)
+    $('#most-recent-subtitle').text(podcasts[start].title)
+    $('#most-recent-description').text('').text(podcasts[start].summary)
+    $('#player').attr('src', podcasts[start].media_url)
 
-    podcasts.slice(1).forEach(updatePodcast)
+    podcasts.slice(start - 5, start - 1).reverse().forEach(updatePodcast)
   }
 };
 
 function updatePodcast(podcast, index){
   console.log("update podcast")
   console.log(podcast)
-  $('#podcast-' + index + '.h2').text(podcast.title)
-  $('#podcast-' + index + '.img').attr('src', podcast.image_url)
+  $('#recent-header-' + (index + 1)).text(podcast.title)
+  $('#recent-image-' + (index + 1)).attr('src', podcast.image_url)
 };
