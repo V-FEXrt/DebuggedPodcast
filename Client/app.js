@@ -8,6 +8,7 @@ api.podcasts.index(function(err, response){
   }
   console.log("podcast index")
   view.getPodcastsAndUpdate(response, response.length - 1)
+  linkPodcastsToUpdateSet(response)
 });
 
 api.podcasts.get(1, function(err, response){
@@ -18,6 +19,14 @@ api.podcasts.get(1, function(err, response){
   console.log("podcast get")
   //console.log(response);
 });
+
+function linkPodcastsToUpdateSet(podcasts){
+    podcasts.forEach(function(podcast, index){
+      $("#unique-id:" + podcast.id).on('click', function(){
+        view.getPodcastsAndUpdate(podcasts, podcast.id)
+      });
+    });
+}
 
 /*
 var params = {

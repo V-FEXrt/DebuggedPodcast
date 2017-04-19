@@ -18,5 +18,7 @@ function updatePodcast(podcast, index){
   console.log("update podcast")
   console.log(podcast)
   $('#recent-header-' + (index + 1)).text(podcast.title)
-  $('#recent-image-' + (index + 1)).attr('src', podcast.image_url)
+  $('#recent-image-' + (index + 1))
+    .attr('src', podcast.image_url)
+    .addClass("unique-id:" + podcast.id)
 };
