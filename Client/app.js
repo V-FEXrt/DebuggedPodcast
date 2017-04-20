@@ -1,34 +1,40 @@
 var api = require('./api');
 var view = require('./view')
 
-var allPodcasts = {}
 
-api.podcasts.index(function(err, response){
-  if(err){
-    console.log(err.message);
-    return;
-  }
-  console.log("podcast index")
-  console.log(response)
-  convertPodcastsToDict(response)
-  view.passPodcasts(allPodcasts)
-  view.getPodcastsAndUpdate(response.length - 1)
-});
+api.podcasts.index(makeIndex);
 
 api.podcasts.get(1, function(err, response){
   if(err){
     console.log(err.message);
     return;
   }
-  console.log("podcast get")
   //console.log(response);
 });
 
+$("#site-header-image").on('click', function(){
+  api.podcasts.index(makeIndex);
+})
+
+function makeIndex(err, response){
+  if(err){
+    console.log(err.message);
+    return;
+  }
+  var allPodcasts = {}
+  allPodcasts = convertPodcastsToDict(response)
+  view.passPodcasts(allPodcasts)
+  view.getPodcastsAndUpdate(response.slice(response.length - 5, response.length).reverse().map(function(podcast){
+    return podcast.id
+  }))
+}
+
 function convertPodcastsToDict(podcasts) {
+  allPodcasts = {}
   podcasts.forEach(function(podcast, index){
     allPodcasts[podcast.id] = podcast
   });
-  console.log(allPodcasts)
+  return allPodcasts
 }
 
 
@@ -56,7 +62,6 @@ api.metadata.index(function(err, response){
     console.log(err.message);
     return;
   }
-  console.log("metadata index")
   //console.log(response);
 });
 
@@ -65,7 +70,6 @@ api.metadata.get(1, function(err, response){
     console.log(err.message);
     return;
   }
-  console.log("metadata get")
   //console.log(response);
 });
 
@@ -74,6 +78,5 @@ api.utils.login("test@debuggedpodcast.com", "password", function(err, response){
     console.log(err.message);
     return;
   }
-  console.log("utils login")
   //console.log(response);
 });
