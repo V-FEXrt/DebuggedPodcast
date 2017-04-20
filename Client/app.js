@@ -1,14 +1,18 @@
 var api = require('./api');
 var view = require('./view')
 
+var allPodcasts = {}
+
 api.podcasts.index(function(err, response){
   if(err){
     console.log(err.message);
     return;
   }
   console.log("podcast index")
-  view.getPodcastsAndUpdate(response, response.length - 1)
-  linkPodcastsToUpdateSet(response)
+  console.log(response)
+  convertPodcastsToDict(response)
+  view.passPodcasts(allPodcasts)
+  view.getPodcastsAndUpdate(response.length - 1)
 });
 
 api.podcasts.get(1, function(err, response){
@@ -20,13 +24,13 @@ api.podcasts.get(1, function(err, response){
   //console.log(response);
 });
 
-function linkPodcastsToUpdateSet(podcasts){
-    podcasts.forEach(function(podcast, index){
-      $("#unique-id:" + podcast.id).on('click', function(){
-        view.getPodcastsAndUpdate(podcasts, podcast.id)
-      });
-    });
+function convertPodcastsToDict(podcasts) {
+  podcasts.forEach(function(podcast, index){
+    allPodcasts[podcast.id] = podcast
+  });
+  console.log(allPodcasts)
 }
+
 
 /*
 var params = {
