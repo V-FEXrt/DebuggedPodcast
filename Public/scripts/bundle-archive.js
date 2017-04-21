@@ -121,7 +121,8 @@ $(pageDidLoad)
 module.exports = {
   getPodcastsAndUpdate: getPodcastsAndUpdate,
   passPodcasts: passPodcasts,
-  createPodcastArchiveHtml: createPodcastArchiveHtml
+  createPodcastArchiveHtml: createPodcastArchiveHtml,
+  getRange: getRange
 }
 
 var allPodcasts = {}

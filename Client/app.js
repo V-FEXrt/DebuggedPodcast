@@ -11,10 +11,10 @@ function makeIndex(err, response){
   allPodcasts = convertPodcastsToDict(response)
   view.passPodcasts(allPodcasts)
   if(podcastIDParam != -1){
-      view.getPodcastsAndUpdate(view.getRange(podcastIDParam))
+    view.getPodcastsAndUpdate(view.getRange(podcastIDParam));
   } else {
     view.getPodcastsAndUpdate(response.slice(response.length - 5, response.length).reverse().map(function(podcast){
-      return podcast.id
+      return podcast.id;
     }))
   }
 }
