@@ -34,7 +34,15 @@ drop.resource(K.API.Tables.Podcasts, PodcastController())
 // MARK: Routes
 
 drop.get { req in
-    return try drop.view.make("index.html")
+    return try drop.view.make("index.leaf", [ "podcast_id" : -1])
+}
+
+drop.get("/", ":id") { request in
+    guard let id = request.parameters["id"]?.int else {
+        throw Abort.badRequest
+    }
+    
+    return try drop.view.make("index.leaf", [ "podcast_id" : id])
 }
 
 drop.get("archive") { req in
