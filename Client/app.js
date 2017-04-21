@@ -1,7 +1,6 @@
 var api = require('./api');
 var view = require('./view')
 
-
 api.podcasts.index(makeIndex);
 
 api.podcasts.get(1, function(err, response){
