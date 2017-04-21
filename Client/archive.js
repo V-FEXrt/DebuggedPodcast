@@ -1,8 +1,6 @@
 var api = require('./api');
 var view = require('./view')
 
-api.podcasts.index(makeArchive)
-
 function makeArchive(err, response){
   if(err){
     console.log(err.message);
@@ -29,3 +27,9 @@ function drawArchivePage(podcasts){
     view.createPodcastArchiveHtml(podcasts[key])
   });
 }
+
+function pageDidLoad() {
+  api.podcasts.index(makeArchive)
+}
+
+$(pageDidLoad)

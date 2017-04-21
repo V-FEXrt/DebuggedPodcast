@@ -24,7 +24,6 @@ var users = {
 
 var login = {
   post: function(email, password, callback) { post("./login/", { email: email, password: password }, callback); },
-  get: function(callback) { get("./login/", callback); }
 }
 
 var utils = {
@@ -84,8 +83,6 @@ function del(url, callback) {
 var api = require('./api');
 var view = require('./view')
 
-api.podcasts.index(makeArchive)
-
 function makeArchive(err, response){
   if(err){
     console.log(err.message);
@@ -113,6 +110,12 @@ function drawArchivePage(podcasts){
   });
 }
 
+function pageDidLoad() {
+  api.podcasts.index(makeArchive)
+}
+
+$(pageDidLoad)
+
 },{"./api":1,"./view":3}],3:[function(require,module,exports){
 
 module.exports = {
@@ -138,7 +141,6 @@ function passPodcasts(podcasts) {
 }
 
 function drawMostRecent(podcast) {
-  console.log(podcast)
   if(podcast) {
     var date = new Date(Date.parse(podcast.publish_date))
     $('#most-recent-image').attr('src', podcast.image_url)
@@ -167,7 +169,6 @@ function createPodcastHTML(podcast, index) {
     .attr('src', podcast.image_url)
     .on('click', function(){
       var range = getRange(podcast.id)
-      console.log(range)
       getPodcastsAndUpdate(range)
     });
 

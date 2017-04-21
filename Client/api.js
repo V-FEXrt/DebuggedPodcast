@@ -23,7 +23,6 @@ var users = {
 
 var login = {
   post: function(email, password, callback) { post("./login/", { email: email, password: password }, callback); },
-  get: function(callback) { get("./login/", callback); }
 }
 
 var utils = {

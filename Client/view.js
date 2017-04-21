@@ -22,7 +22,6 @@ function passPodcasts(podcasts) {
 }
 
 function drawMostRecent(podcast) {
-  console.log(podcast)
   if(podcast) {
     var date = new Date(Date.parse(podcast.publish_date))
     $('#most-recent-image').attr('src', podcast.image_url)
@@ -51,7 +50,6 @@ function createPodcastHTML(podcast, index) {
     .attr('src', podcast.image_url)
     .on('click', function(){
       var range = getRange(podcast.id)
-      console.log(range)
       getPodcastsAndUpdate(range)
     });
 

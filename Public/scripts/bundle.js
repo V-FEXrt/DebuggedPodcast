@@ -24,7 +24,6 @@ var users = {
 
 var login = {
   post: function(email, password, callback) { post("./login/", { email: email, password: password }, callback); },
-  get: function(callback) { get("./login/", callback); }
 }
 
 var utils = {
@@ -94,11 +93,7 @@ function makeIndex(err, response){
   allPodcasts = convertPodcastsToDict(response)
   view.passPodcasts(allPodcasts)
   if(podcastIDParam != -1){
-      var ids = []
-      for(var i = podcastIDParam; (i > podcastIDParam - 5) && (i > 0); i--){
-        ids.push(i)
-      }
-      view.getPodcastsAndUpdate(ids)
+      view.getPodcastsAndUpdate(view.getRange(podcastIDParam))
   } else {
     view.getPodcastsAndUpdate(response.slice(response.length - 5, response.length).reverse().map(function(podcast){
       return podcast.id
@@ -168,7 +163,6 @@ function passPodcasts(podcasts) {
 }
 
 function drawMostRecent(podcast) {
-  console.log(podcast)
   if(podcast) {
     var date = new Date(Date.parse(podcast.publish_date))
     $('#most-recent-image').attr('src', podcast.image_url)
@@ -197,7 +191,6 @@ function createPodcastHTML(podcast, index) {
     .attr('src', podcast.image_url)
     .on('click', function(){
       var range = getRange(podcast.id)
-      console.log(range)
       getPodcastsAndUpdate(range)
     });
 

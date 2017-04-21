@@ -49,10 +49,6 @@ drop.get("archive") { req in
     return try drop.view.make("archive.html")
 }
 
-drop.get("login") { req in
-    return try drop.view.make("login.html")
-}
-
 drop.get("feed/podcast.rss") { req in
     var podcasts:[Node] = []
 
