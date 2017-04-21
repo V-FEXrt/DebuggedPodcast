@@ -2,20 +2,6 @@ var api = require('./api');
 var view = require('./view')
 
 
-api.podcasts.index(makeIndex);
-
-api.podcasts.get(1, function(err, response){
-  if(err){
-    console.log(err.message);
-    return;
-  }
-  //console.log(response);
-});
-
-$("#site-header-image").on('click', function(){
-  api.podcasts.index(makeIndex);
-})
-
 function makeIndex(err, response){
   if(err){
     console.log(err.message);
@@ -37,46 +23,31 @@ function convertPodcastsToDict(podcasts) {
   return allPodcasts
 }
 
+function pageDidLoad() {
+  api.podcasts.index(makeIndex);
 
-/*
-var params = {
-    title: "Title",
-    subtitle : "Subtitle",
-    author : "Author",
-    summary : "Summary",
-    media_duration : "12:34",
-    media : null // TODO: This will cause the server to throw an error. This should be the file from the user
+  $("#site-header-image").click(function(){
+    api.podcasts.index(makeIndex);
+  });
+
+  $("#admin-login-submit").click(function() {
+    var email = $("#admin-login-email").val()
+    var password = $("#admin-login-password").val()
+
+    api.utils.login.post(email, password, function(err, response){
+      if(err){
+        $("#admin-login-modal").shake();
+        return;
+      }
+
+      $("#admin-login-modal").modal('hide');
+
+      setTimeout(function(){
+        window.location.replace("./admin");
+      }, 1000)
+
+    })
+  });
 }
 
-api.podcasts.post(params, function(err, response){
-  if(err){
-    console.log(err.message);
-    return;
-  }
-  console.log(response);
-});
-*/
-
-api.metadata.index(function(err, response){
-  if(err){
-    console.log(err.message);
-    return;
-  }
-  //console.log(response);
-});
-
-api.metadata.get(1, function(err, response){
-  if(err){
-    console.log(err.message);
-    return;
-  }
-  //console.log(response);
-});
-
-api.utils.login("test@debuggedpodcast.com", "password", function(err, response){
-  if(err){
-    console.log(err.message);
-    return;
-  }
-  //console.log(response);
-});
+$(pageDidLoad)

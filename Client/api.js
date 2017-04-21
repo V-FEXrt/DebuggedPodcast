@@ -21,13 +21,13 @@ var users = {
     // TODO: Update
 }
 
+var login = {
+  post: function(email, password, callback) { post("./login/", { email: email, password: password }, callback); },
+  get: function(callback) { get("./login/", callback); }
+}
+
 var utils = {
-  login: function(email, password, callback) {
-    post("./login/", {
-      email: email,
-      password: password
-    }, callback);
-  }
+  login: login
 }
 
 module.exports = {
