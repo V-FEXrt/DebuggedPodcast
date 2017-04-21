@@ -89,6 +89,7 @@
 
             <div class="col-md-8">
                 <h3 id="most-recent-subtitle">Project Description</h3>
+                <label id="most-recent-label"></label> <br>
                 <p2 id="most-recent-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis
                     enim.
                 </p2>
@@ -183,7 +184,7 @@
     </div>
 
     <!-- Podcast ID -->
-    <script type="text/javascript"> window.podcaseIDParam = #(podcast_id); </script>
+    <script type="text/javascript"> window.podcastIDParam = #(podcast_id); </script>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>

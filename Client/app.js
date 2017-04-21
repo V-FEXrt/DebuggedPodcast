@@ -10,9 +10,17 @@ function makeIndex(err, response){
   var allPodcasts = {}
   allPodcasts = convertPodcastsToDict(response)
   view.passPodcasts(allPodcasts)
-  view.getPodcastsAndUpdate(response.slice(response.length - 5, response.length).reverse().map(function(podcast){
-    return podcast.id
-  }))
+  if(podcastIDParam != -1){
+      var ids = []
+      for(var i = podcastIDParam; (i > podcastIDParam - 5) && (i > 0); i--){
+        ids.push(i)
+      }
+      view.getPodcastsAndUpdate(ids)
+  } else {
+    view.getPodcastsAndUpdate(response.slice(response.length - 5, response.length).reverse().map(function(podcast){
+      return podcast.id
+    }))
+  }
 }
 
 function convertPodcastsToDict(podcasts) {

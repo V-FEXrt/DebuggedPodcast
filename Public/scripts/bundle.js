@@ -93,9 +93,17 @@ function makeIndex(err, response){
   var allPodcasts = {}
   allPodcasts = convertPodcastsToDict(response)
   view.passPodcasts(allPodcasts)
-  view.getPodcastsAndUpdate(response.slice(response.length - 5, response.length).reverse().map(function(podcast){
-    return podcast.id
-  }))
+  if(podcastIDParam != -1){
+      var ids = []
+      for(var i = podcastIDParam; (i > podcastIDParam - 5) && (i > 0); i--){
+        ids.push(i)
+      }
+      view.getPodcastsAndUpdate(ids)
+  } else {
+    view.getPodcastsAndUpdate(response.slice(response.length - 5, response.length).reverse().map(function(podcast){
+      return podcast.id
+    }))
+  }
 }
 
 function convertPodcastsToDict(podcasts) {
@@ -162,8 +170,10 @@ function passPodcasts(podcasts) {
 function drawMostRecent(podcast) {
   console.log(podcast)
   if(podcast) {
+    var date = new Date(Date.parse(podcast.publish_date))
     $('#most-recent-image').attr('src', podcast.image_url)
     $('#most-recent-subtitle').text(podcast.title)
+    $('#most-recent-label').text('Published: ' + date.toLocaleDateString())
     $('#most-recent-description').text('').text(podcast.summary)
     $('#player').attr('src', podcast.media_url)
     return
@@ -186,15 +196,19 @@ function createPodcastHTML(podcast, index) {
     .addClass("portfolio-item")
     .attr('src', podcast.image_url)
     .on('click', function(){
-      var range = []
-      for(var i = podcast.id; (i > podcast.id - 5) && (i > 0); i--) {
-        range.push(i)
-      }
+      var range = getRange(podcast.id)
+      console.log(range)
       getPodcastsAndUpdate(range)
     });
 
+  var date = (new Date(Date.parse(podcast.publish_date))).toLocaleDateString()
+
+  var label = $('<label>')
+    .text("Published: " + date)
+
   div.append(header)
   div.append(image)
+  div.append(label)
   $("#podcasts-row").append(div)
 }
 
@@ -208,12 +222,7 @@ function createPodcastArchiveHtml(podcast) {
     .addClass("portfolio-item")
     .attr('src', podcast.image_url)
     .on('click', function(){
-      var range = []
-      for(var i = podcast.id; (i > podcast.id - 5) && (i > 0); i--) {
-        range.push(i)
-      }
-      console.log(range)
-      getPodcastsAndUpdate(range)
+      window.location.replace("./" + podcast.id)
     });
 
   var bodyDiv = $('<div>')
@@ -223,8 +232,10 @@ function createPodcastArchiveHtml(podcast) {
     .attr('id', 'archive-subtitle-' + podcast.id)
     .text(podcast.title)
 
+  var date = (new Date(Date.parse(podcast.publish_date))).toLocaleDateString()
+
   var label = $('<label>')
-    .text("Published: " + podcast.publish_date)
+    .text("Published: " + date)
 
   var body = $('<p>')
     .attr('id', 'archive-description-' + podcast.id)
@@ -237,6 +248,28 @@ function createPodcastArchiveHtml(podcast) {
   div.append(body)
 
   $('#archive-div').append(div)
+}
+
+function getRange(start){
+  var range = []
+  var sortedPodcasts = Object.keys(allPodcasts).sort(function(a, b){
+    return parseInt(a) > parseInt(b)
+  });
+  var currentIndex = sortedPodcasts.indexOf(start)
+  // build array of indexes
+  for(var i = 0; i < 5; i++){
+    range.push(currentIndex)
+    currentIndex = currentIndex - 1
+    if(currentIndex < 0 ){
+      currentIndex = sortedPodcasts.length - 1
+    }
+  }
+  // build ids
+  var ids = []
+  for(var j = 0; j < range.length; j++){
+      ids.push(sortedPodcasts[range[j]])
+  }
+  return ids
 }
 
 /*
