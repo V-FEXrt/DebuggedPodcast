@@ -41,7 +41,7 @@ drop.get("/", ":id") { request in
     guard let id = request.parameters["id"]?.int else {
         throw Abort.badRequest
     }
-    
+
     return try drop.view.make("index.leaf", [ "podcast_id" : id])
 }
 
@@ -125,7 +125,7 @@ drop.grouped(protect).group("") { admin in
             throw Abort.custom(status: .badRequest, message: "Invalid user type.")
         }
 
-        return "Welcome to the admin page \(user.firstName)"
+        return try drop.view.make("admin.html")
     }
 
     // MARK: Authorized Resource
