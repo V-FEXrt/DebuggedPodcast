@@ -111,31 +111,31 @@
             </div>
 
             <div class="col-sm-3 col-xs-6" id="podcast-1">
-              <h2 id="recent-header-1">
+                <h2 id="recent-header-1">
                     Lorem ipsum dolor sit amet, consectetur
               </h2>
-                    <img class="img-responsive portfolio-item" src="./images/logo.png" alt="" height=200px width=200px id="recent-image-1">
+                <img class="img-responsive portfolio-item" src="./images/logo.png" alt="" height=200px width=200px id="recent-image-1">
             </div>
 
             <div class="col-sm-3 col-xs-6" id="podcast-2">
-              <h2 id="recent-header-2">
+                <h2 id="recent-header-2">
                     Lorem ipsum dolor sit amet, consectetur
               </h2>
-                    <img class="img-responsive portfolio-item" src="./images/logo.png" alt="" height=200px width=200px id="recent-image-2">
+                <img class="img-responsive portfolio-item" src="./images/logo.png" alt="" height=200px width=200px id="recent-image-2">
             </div>
 
             <div class="col-sm-3 col-xs-6" id="podcast-3">
-              <h2 id="recent-header-3">
+                <h2 id="recent-header-3">
                     Lorem ipsum dolor sit amet, consectetur
               </h2>
-                    <img class="img-responsive portfolio-item" src="./images/logo.png" alt="" height=200px width=200px id="recent-image-3">
+                <img class="img-responsive portfolio-item" src="./images/logo.png" alt="" height=200px width=200px id="recent-image-3">
             </div>
 
             <div class="col-sm-3 col-xs-6" id="podcast-4">
-              <h2 id="recent-header-4">
+                <h2 id="recent-header-4">
                     Lorem ipsum dolor sit amet, consectetur
               </h2>
-                    <img class="img-responsive portfolio-item" src="./images/logo.png" alt="" height=200px width=200px id="recent-image-4">
+                <img class="img-responsive portfolio-item" src="./images/logo.png" alt="" height=200px width=200px id="recent-image-4">
             </div>
 
         </div>
@@ -158,46 +158,65 @@
 
     <!-- Modal -->
     <div class="modal fade" id="admin-login-modal" tabindex="-1" role="dialog" aria-labelledby="admin-login-modal-title" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title" id="admin-login-modal-title">Admin Login</h1>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="admin-login-modal-title">Admin Login</h1>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-          </div>
-          <div class="modal-body">
-            <form>
-                <div class="form-group">
-                    <label for="admin-login-email">Email address</label>
-                    <input type="email" class="form-control" id="admin-login-email" aria-describedby="emailHelp" placeholder="Enter email">
                 </div>
-                <div class="form-group">
-                    <label for="admin-login-password">Password</label>
-                    <input type="password" class="form-control" id="admin-login-password" placeholder="Password">
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="admin-login-email">Email address</label>
+                            <input type="email" class="form-control" id="admin-login-email" aria-describedby="emailHelp" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="admin-login-password">Password</label>
+                            <input type="password" class="form-control" id="admin-login-password" placeholder="Password">
+                        </div>
+                    </form>
                 </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button id="admin-login-submit" type="button" class="btn btn-primary">Login</button>
-          </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="admin-login-submit" type="button" class="btn btn-primary">Login</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <!-- Podcast ID -->
-    <script type="text/javascript"> window.podcastIDParam = "#(podcast_id)"; </script>
+    <script type="text/javascript">
+        window.podcastIDParam = "#(podcast_id)";
+    </script>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-
 
     <!-- Bootstrap Core JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- Client Scrips -->
     <script src="./scripts/bundle.js"></script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-97986848-1', 'auto');
+        ga('send', 'pageview');
+    </script>
 
 </body>
 
