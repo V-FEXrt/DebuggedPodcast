@@ -1,7 +1,7 @@
 var api = require('./api');
 
 var objectUrl;
-var duration = "00:00"
+var audioDuration = "00:00"
 
 function pageDidLoad() {
   setUpSubmit();
@@ -23,12 +23,17 @@ function setUpSubmit(){
     form.append('subtitle', subtitle);
     form.append('author', author);
     form.append('summary', summary);
-    form.append('media_duration', duration);
-    form.append('image', imageData, imageData.name);
+    form.append('media_duration', audioDuration);
+
+    if(imageData){
+      form.append('image', imageData, imageData.name);
+    }
+
     form.append('media', podcastData, podcastData.name);
 
     api.podcasts.post(form, function(err, response){
       if(err){
+        console.log("Error: err");
         alert("Upload Failed");
         return;
       }
@@ -53,7 +58,7 @@ function setUpDurationHack(){
       if(seconds < 10) { seconds = "0" + seconds }
 
       time = time + minutes + ":" + seconds;
-      duration = time;
+      audioDuration = time;
 
       URL.revokeObjectURL(objectUrl);
   });

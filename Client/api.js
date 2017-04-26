@@ -102,7 +102,7 @@ function del(url, callback) {
 }
 
 function createPodcast(form, callback) {
-    var settings = {
+    $.ajax({
         "async": true,
         "url": "./podcasts/",
         "method": "POST",
@@ -112,10 +112,12 @@ function createPodcast(form, callback) {
         "processData": false,
         "contentType": false,
         "mimeType": "multipart/form-data",
-        "data": form
-    }
-
-    $.ajax(settings).done(function(response) {
-        callback(response);
+        "data": form,
+        success: function(result) {
+            callback(false, result);
+        },
+        error: function(xhr, status, error) {
+            callback(JSON.parse(xhr.responseText), false)
+        }
     });
 }
