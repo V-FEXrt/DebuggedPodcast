@@ -20,7 +20,7 @@ ctrl-c
 vapor run serve
 ```
 
-Next, you need to install [browserify](http://browserify.org/). And in a second terminal, run: `browserify Client/app.js -o Public/scripts/bundle.js` and `browserify Client/archive.js -o Public/scripts/bundle-archive.js`. This should be done before you attempt to request the page. This also will make it so that you don't need to restart your server if you change the javascript.
+Next, you need to install [browserify](http://browserify.org/). And in a second terminal, run: `browserify Client/app.js -o Public/scripts/bundle.js`, `browserify Client/archive.js -o Public/scripts/bundle-archive.js`, and `browserify Client/admin.js -o Public/scripts/bundle-admin.js`. This should be done before you attempt to request the page. This also will make it so that you don't need to restart your server if you change the javascript.
 
 To change the domain in which the server will process requests from:
 ```

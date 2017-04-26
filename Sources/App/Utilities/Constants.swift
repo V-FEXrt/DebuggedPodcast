@@ -29,6 +29,7 @@ struct K {
         static let Description = "description"
         static let OwnerName = "owner_name"
         static let OwnerEmail = "owner_email"
+        static let Image = "image"
         static let ImageURL = "image_url"
         static let Category = "category"
         static let IsExplicit = "is_explicit"

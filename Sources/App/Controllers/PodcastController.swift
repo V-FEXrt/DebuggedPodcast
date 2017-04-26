@@ -19,7 +19,7 @@ class PodcastController: ResourceRepresentable {
     func create(request: Request) throws -> ResponseRepresentable {
         let user = try requireAuth(req: request)
         let metadata = try Metadata.all().first
-        
+
         let params = try Validator.validate(req: request, expected:
             [
                 K.API.Title : Type.String,
@@ -29,27 +29,27 @@ class PodcastController: ResourceRepresentable {
                 K.API.MediaDuration : Type.String
             ])
 
-        
         var imageURL = metadata?.imageURL ?? ""
         let domain = metadata?.websiteURL ?? ""
+
+        let filename = try "ep\(Podcast.all().count + 1).mp3"
         
-        let filename = try "ep\(Podcast.all().count).mp3"
-        
-        if let url = request.data[K.API.ImageURL]?.string {
-            imageURL = url
+        if let image = request.data[K.API.Image] as? FormData.Field {
+            try Data(image.part.body).write(to: URL(fileURLWithPath: drop.workDir + "/Public/images/\(image.filename ?? "unnamed")"))
+            imageURL = "\(domain)/images/\(image.filename ?? "unnamed")"
         }
-        
+
         guard let file = request.data[K.API.Media] as? FormData.Field else {
             throw Abort.custom(status: Status.badRequest, message: "'media' should be type: Multipart Binary")
         }
-        
+
         try Data(file.part.body).write(to: URL(fileURLWithPath: drop.workDir + "/Public/media/\(filename)"))
         
         let df:DateFormatter = DateFormatter()
         df.dateFormat = "EEE, dd MMM yyyy HH:mm:ss Z"; //RFC2822-Format
         df.locale = Locale(identifier: "en_US_POSIX")
         let date:String = df.string(from: Date())
-        
+
         var podcast = Podcast(title: params.string[K.API.Title] ?? "",
                               author: params.string[K.API.Author] ?? "",
                               subtitle: params.string[K.API.Subtitle] ?? "",
@@ -63,7 +63,6 @@ class PodcastController: ResourceRepresentable {
                               publishDate: date,
                               createdBy: user.id?.int ?? -1,
                               metadata: metadata?.id?.int ?? -1)
-        
         try podcast.save()
         return podcast
     }

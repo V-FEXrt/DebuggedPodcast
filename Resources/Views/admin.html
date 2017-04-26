@@ -67,35 +67,35 @@
             </div>
         </div>
 
-        <form>
+        <form id="create-podcast-form">
             <div class="form-group">
                 <label for="author">Author(s)</label>
-                <input type="text" class="form-control" id="author" aria-describedby="author" placeholder="Author(s)">
+                <input type="text" class="form-control" id="form-author" aria-describedby="author" placeholder="Author(s)">
             </div>
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" placeholder="Title">
+                <input type="text" class="form-control" id="form-title" placeholder="Title">
             </div>
             <div class="form-group">
                 <label for="subtitle">Subtitle</label>
-                <input type="text" class="form-control" id="subtitle" placeholder="Subtitle">
+                <input type="text" class="form-control" id="form-subtitle" placeholder="Subtitle">
             </div>
             <div class="form-group">
                 <label for="summary">Summary</label>
-                <textarea class="form-control" id="summary" placeholder="Summary" rows="3"></textarea>
+                <textarea class="form-control" id="form-summary" placeholder="Summary" rows="3"></textarea>
             </div>
             <div class="form-group">
               <label for="image">Image</label>
-              <input type="file" id="image" class="custom-file-input">
+              <input type="file" id="form-image" class="custom-file-input">
               <span class="custom-file-control"></span>
             </div>
             <div class="form-group">
               <label for="podcast">Podcast</label>
-              <input type="file" id="podcast" class="custom-file-input">
+              <input type="file" id="form-podcast" class="custom-file-input">
               <span class="custom-file-control"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        <button id="submit-podcast-button" class="btn btn-primary">Submit</button>
 
 
         <hr>
@@ -113,6 +113,10 @@
     </div>
     <!-- /.container -->
 
+    <!-- Used as a Hack to get audio duration. pls ignore -->
+    <audio id="audio"></audio>
+    <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
@@ -121,7 +125,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- Client Scrips -->
-    <script src="./scripts/bundle-archive.js"></script>
+    <script src="./scripts/bundle-admin.js"></script>
 
     <!-- Google Analytics -->
     <script>
