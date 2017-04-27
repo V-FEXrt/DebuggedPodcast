@@ -31,15 +31,38 @@ function setUpSubmit(){
 
     form.append('media', podcastData, podcastData.name);
 
+    $('#loader').show()
     api.podcasts.post(form, function(err, response){
       if(err){
         console.log("Error: err");
-        alert("Upload Failed");
+        uploadFailure()
         return;
       }
-      alert("Upload Complete");
+      uploadSuccess()
     });
   });
+}
+
+function uploadSuccess(){
+  $('#loader').hide()
+  var div = $('<div>')
+    .addClass('alert')
+    .addClass('alert-success')
+    .attr('role', 'alert')
+    .text('Successfully uploaded a podcast!')
+
+  $('#upload-form').append(div)
+}
+
+function uploadFailure(){
+    $('#loader').hide()
+    var div = $('<div>')
+      .addClass('alert')
+      .addClass('alert-danger')
+      .attr('role', 'alert')
+      .text('Upload failed for some reason...')
+
+    $('#upload-form').append(div)
 }
 
 function setUpDurationHack(){
