@@ -31,23 +31,15 @@ function drawArchivePage(podcasts){
 
 function filter(){
   var searchString = $('#search-input').val().toUpperCase()
-  console.log(searchString)
   var podcasts = $('#archive-div').children()
-  console.log(podcasts)
   for(var i = 0; i < podcasts.length; i++){
     var h3 = podcasts[i].getElementsByTagName('h3')
-    console.log(h3[0].innerHTML)
     if (h3[0].innerHTML.toUpperCase().indexOf(searchString) > -1) {
-           console.log(h3[0].innerHTML.toUpperCase().indexOf(searchString))
-           console.log("match")
            podcasts[i].style.display = "";
        } else {
-           console.log(h3[0].innerHTML.toUpperCase().indexOf(searchString))
-           console.log("non match")
            podcasts[i].style.display = "none";
        }
   }
-  console.log($("h3:contains(searchString)"))
 }
 
 function pageDidLoad() {

@@ -12,14 +12,15 @@ body {
 }
 
 #search-form {
-  margin-top: 20px;
+  margin-top: 25px;
+  padding-bottom: 20px;
 }
 
-.page-header {
+#archive-heading {
   border-bottom: none;
 }
 
-.heading-row {
+#heading-row {
   border-bottom: 1px solid #eee;
   padding-bottom: 9px;
   margin: 40px 0 20px;
@@ -95,4 +96,10 @@ footer {
 
 .alert {
   margin: 20px;
+}
+
+button.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
